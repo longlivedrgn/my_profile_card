@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>디지털 명함 - KIM YONG JAE</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+      color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .card {
+      max-width: 500px;
+      width: 90%;
+      min-height: 700px;
+      padding: 40px 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid #ccc;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      text-align: center;
+      background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('images/사원증사진.jpg');
+      background-size: contain;
+      background-position: bottom;
+      background-repeat: no-repeat;
+      border-radius: 12px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    }
+    .card-header {
+      margin-bottom: 30px;
+    }
+    .card-content {
+      margin: 20px 0;
+    }
+    .card-footer {
+      margin-top: 30px;
+    }
+    .company-logo {
+      width: 180px;
+      height: auto;
+      margin-bottom: 30px;
+      transition: transform 0.3s ease;
+    }
+    .company-logo:hover {
+      transform: scale(1.1);
+    }
+    .initial {
+      font-size: 100px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #333;
+      cursor: pointer;
+      transition: all 0.5s ease;
+      position: relative;
+      display: inline-block;
+      transform: translateX(0);
+      opacity: 1;
+      line-height: 1;
+    }
+    .initial:hover {
+      color: #007bff;
+    }
+    .initial.slide-out {
+      transform: translateX(-150px);
+      opacity: 0;
+    }
+    .initial.slide-in {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    .full-name-container {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .full-name {
+      font-size: 100px;
+      font-weight: bold;
+      color: #333;
+      position: absolute;
+      white-space: nowrap;
+      transform: translateX(100px);
+      opacity: 0;
+      transition: all 0.5s ease;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .full-name:hover {
+      color: #007bff;
+    }
+    .full-name.slide-in {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    .full-name.slide-out {
+      transform: translateX(150px);
+      opacity: 0;
+    }
+    .name {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 10px 0;
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards;
+      animation-delay: 0.3s;
+    }
+    .title {
+      font-style: italic;
+      color: #555;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards;
+      animation-delay: 0.6s;
+    }
+    .info {
+      font-size: 14px;
+      margin: 6px 0;
+    }
+    .info a, .social a {
+      color: #333;
+      text-decoration: none;
+      position: relative;
+      transition: color 0.3s ease;
+      padding: 5px 10px;
+    }
+    .info a::after, .social a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: #007bff;
+      transition: width 0.3s ease;
+    }
+    .info a:hover, .social a:hover {
+      color: #007bff;
+    }
+    .info a:hover::after, .social a:hover::after {
+      width: 100%;
+    }
+    .social {
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    .social div {
+      margin: 4px 0;
+    }
+    @media (max-width: 500px) {
+      .card {
+        padding: 30px 10px;
+      }
+      .initial {
+        font-size: 60px;
+      }
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .info a:active, .social a:active {
+      transform: scale(0.95);
+    }
+    .title::after {
+      content: '|';
+      margin-left: 5px;
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+    .social a {
+      display: inline-block;
+      padding: 8px 15px;
+      border-radius: 20px;
+      background: #f8f9fa;
+      margin: 5px;
+      transition: all 0.3s ease;
+    }
+    .social a:hover {
+      background: #007bff;
+      color: white;
+    }
+    .social a:hover::after {
+      width: 0;
+    }
+    .card-header > div {
+      position: relative;
+      height: 120px;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="card" role="region" aria-label="디지털 명함">
+    <div class="card-header">
+      <img src="images/회사로고.svg" alt="회사 로고" class="company-logo">
+      <div style="position: relative; height: 80px;">
+        <div class="initial" aria-hidden="true">K</div>
+        <div class="full-name-container">
+          <div class="full-name">김용재</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+    </div>
+    
+    <div class="card-content">
+      <div class="name" aria-label="이름">KIM YONG JAE</div>
+      <div class="title" aria-label="직함">Software Engineer</div>
+      <div class="info">
+        <p><a href="tel:+82-10-1234-5678" aria-label="전화번호">+82 10-1234-5678</a></p>
+        <p><a href="mailto:yongjae.kim@example.com" aria-label="이메일">yongjae.kim@example.com</a></p>
+        <p><a href="https://github.com/longlivedrgn" target="_blank" rel="noopener" aria-label="깃허브">github.com/longlivedrgn</a></p>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <div class="social" aria-label="소셜 링크">
+        <div><a href="https://github.com/longlivedrgn" target="_blank" rel="noopener" aria-label="깃허브">GitHub @longlivedrgn</a></div>
+        <div><a href="https://www.linkedin.com/in/yongjae-kim" target="_blank" rel="noopener" aria-label="링크드인">LinkedIn @yongjae-kim</a></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const initial = document.querySelector('.initial');
+      const fullName = document.querySelector('.full-name');
+      let isExpanded = false;
+
+      function toggleName() {
+        if (!isExpanded) {
+          // K를 왼쪽으로 슬라이드아웃
+          initial.classList.add('slide-out');
+          initial.classList.remove('slide-in');
+
+          // 약간의 딜레이 후 이름을 슬라이드인
+          setTimeout(() => {
+            fullName.classList.add('slide-in');
+            fullName.classList.remove('slide-out');
+          }, 150);
+        } else {
+          // 이름을 오른쪽으로 슬라이드아웃
+          fullName.classList.remove('slide-in');
+          fullName.classList.add('slide-out');
+
+          // 약간의 딜레이 후 K를 슬라이드인
+          setTimeout(() => {
+            initial.classList.remove('slide-out');
+            initial.classList.add('slide-in');
+          }, 150);
+        }
+
+        isExpanded = !isExpanded;
+      }
+
+      initial.addEventListener('click', toggleName);
+      fullName.addEventListener('click', toggleName);
+    });
+
+    // 기존의 이메일 복사 코드는 유지
+    const emailLink = document.querySelector('a[href^="mailto:"]');
+    emailLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      const email = this.href.replace('mailto:', '');
+      navigator.clipboard.writeText(email);
+      
+      const originalText = this.textContent;
+      this.textContent = '이메일이 복사되었습니다!';
+      setTimeout(() => {
+        this.textContent = originalText;
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
